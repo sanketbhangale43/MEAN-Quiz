@@ -1,0 +1,100 @@
+<div class="container mt-5">
+    <!-- Quiz name -->
+    <div class="shadow p-4 border">
+        <mat-form-field appearance="outline" class="col-12 p-0 m-0">
+            <mat-label>Quiz name</mat-label>
+            <input matInput placeholder="Quiz name" [(ngModel)]="service.quizName" required>
+        </mat-form-field>
+
+        <!-- Question - set -->
+        <div class="border p-2 mt-2" *ngFor="let set of service.questionSet; let i=index;">
+            <p class="col-12 h6 p-0 m-0 mb-1">Question - {{i+1}}</p>
+            <!-- Question -->
+            <mat-form-field appearance="outline" class="col-12">
+                <mat-label>Question</mat-label>
+                <input matInput placeholder="Question" (keyup)="set_question(i, $event)" required>
+            </mat-form-field>
+
+            <!-- Options row - 1 -->
+            <div class="d-flex">
+                <div class="col-6">
+                    <div class="p-2">
+                        <!-- Option A -->
+                        <div class="d-flex align-items-center">
+                            <mat-checkbox class="example-margin" (change)="set_correct_answer(i, $event, 1)">
+                            </mat-checkbox>
+                            <mat-form-field appearance="outline" class="col-12 _custom_input_margin_class_0px">
+                                <mat-label>Option A</mat-label>
+                                <input matInput placeholder="Option A" (keyup)='set_option(i, $event, 1)' required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="p-2">
+                        <!-- Option B -->
+                        <div class="d-flex align-items-center">
+                            <mat-checkbox class="example-margin" (change)="set_correct_answer(i, $event, 2)">
+                            </mat-checkbox>
+                            <mat-form-field appearance="outline" class="col-12 _custom_input_margin_class_0px">
+                                <mat-label>Option B</mat-label>
+                                <input matInput placeholder="Option B" (keyup)='set_option(i, $event, 2)' required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Options row - 2 -->
+            <div class="d-flex">
+                <div class="col-6">
+                    <div class="p-2">
+                        <!-- Option C -->
+                        <div class="d-flex align-items-center">
+                            <mat-checkbox class="example-margin" (change)="set_correct_answer(i, $event, 3)">
+                            </mat-checkbox>
+                            <mat-form-field appearance="outline" class="col-12 _custom_input_margin_class_0px">
+                                <mat-label>Option C</mat-label>
+                                <input matInput placeholder="Option C" (keyup)=' set_option(i, $event, 3)' required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="p-2">
+                        <!-- Option D -->
+                        <div class="d-flex align-items-center">
+                            <mat-checkbox class="example-margin" (change)="set_correct_answer(i, $event, 4)">
+                            </mat-checkbox>
+                            <mat-form-field appearance="outline" class="col-12 _custom_input_margin_class_0px">
+                                <mat-label>Option D</mat-label>
+                                <input matInput placeholder="Option D" (keyup)='set_option(i, $event, 4)' required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex">
+                <button mat-stroked-button color="primary" class="ml-auto mt-2" (click)="add_question_set()"
+                    *ngIf="i+1 === noOfQuestionsentered" [disabled]="maxQuestions === noOfQuestionsentered">Add
+                    more</button>
+                <button mat-stroked-button color="warn" class="ml-2 mt-2"
+                    [ngClass]="{'ml-auto' : i+1 !== noOfQuestionsentered}" (click)="remove_question_set(i)"
+                    [disabled]="noOfQuestionsentered === 1">Remove
+                    this</button>
+            </div>
+        </div>
+
+        <div class="mt-4 ml-2 d-flex justify-content-center col-12">
+            <div class="col-6">
+                <mat-progress-bar mode="indeterminate" *ngIf="service.loading"></mat-progress-bar>
+                <button mat-flat-button class="col-12" color="primary" [disabled]="service.loading"
+                    (click)="save_quiz()">Save
+                    quiz</button>
+            </div>
+        </div>
+    </div>
+</div>
