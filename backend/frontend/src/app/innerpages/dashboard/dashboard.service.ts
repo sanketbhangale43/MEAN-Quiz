@@ -33,6 +33,7 @@ export class DashboardService {
     requestObservable.subscribe(
       res => {
         if (res.status === 200 && res.body.msg === 'success') {
+          this.loading = false;
           this.allQuizzes = res.body.data;
           this.allQuizzes.reverse();
         }

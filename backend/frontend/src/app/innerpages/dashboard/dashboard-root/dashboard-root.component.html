@@ -1,27 +1,34 @@
 <app-inner-navbar></app-inner-navbar>
 <div class="container">
 
-
-    <!-- Create or start quiz -->
+    <!-- Create quiz -->
     <div class="d-flex mt-5">
         <button mat-flat-button color="primary" (click)="open_create_quiz_page()">Create quiz</button>
     </div>
 
-    <!-- Pregress cards -->
+    <!-- All quizzes -->
     <div class="row mt-5" *ngIf="service.allQuizzes.length">
         <div class="col-12 border p-0 m-0 pt-2 pl-4 pb-2 pr-4" *ngFor="let obj of service.allQuizzes">
             <div class="d-flex">
                 <div>
+                    <!-- Quiz - name -->
                     <p class="h6 p-0 m-0">{{ obj.name }}</p>
 
-                    <p class="p-0 m-0 mt-2">Total questions: {{ obj.questions.length }}</p>
+                    <!-- Quiz - Total no of questions -->
+                    <p class="p-0 m-0 mt-2 text-muted">Total questions: {{ obj.questions.length }}</p>
                 </div>
                 <button mat-stroked-button color="primary" class="ml-auto" (click)="start_quiz(obj._id)">Start</button>
             </div>
         </div>
     </div>
 
-    <div class="_ht d-flex align-items-center justify-content-center" *ngIf="!service.allQuizzes.length">
+    <div class="_ht d-flex align-items-center justify-content-center" *ngIf="service.loading">
+        <mat-spinner [strokeWidth]="3" [diameter]="50"></mat-spinner>
+    </div>
+
+    <!-- No quizzes placeholder -->
+    <div class="_ht d-flex align-items-center justify-content-center"
+        *ngIf="!service.allQuizzes.length && !service.loading">
         <div class="shadow-sm border p-4 d-flex flex-column justify-content-center">
             <p class="h6 p-0 m-0">There are no quizzes.</p>
         </div>
