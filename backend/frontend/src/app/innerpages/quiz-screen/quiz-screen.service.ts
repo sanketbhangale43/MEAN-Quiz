@@ -1,32 +1,56 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { endpoints } from 'src/app/ApiUrls';
-import { QuestionSet } from '../create-quiz/create-quiz.service';
+
+
+export interface QuestionWithSelectedOptions {
+  question: string;
+  option_a: string;
+  option_b: string;
+  option_c: string;
+  option_d: string;
+  correct_options: number[];
+  selected_options: number[];
+}
 
 export interface QuizDataType {
   _id: string;
   name: string;
   creator_id: string;
-  questions: QuestionSet[];
+  questions: QuestionWithSelectedOptions[];
 }
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class DashboardService {
+export class QuizScreenService {
+  quizId = '';
   loading = false;
-  allQuizzes: QuizDataType[] = [];
+  quizData: QuizDataType;
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+    this.quizData = {
+      _id: '',
+      name: '',
+      creator_id: '',
+      questions: []
+    };
+  }
 
-  get_all_quizzes() {
+  get_quiz_data() {
     this.loading = true;
+    // Params
+    const params = {
+      quiz_id: this.quizId
+    };
+
     // Request
     const requestObservable = this.http.get<any>(
-      endpoints.AllQuizzesApi,
-      { observe: 'response' }
+      endpoints.QuizApi,
+      { observe: 'response', params }
     );
 
     // Response
@@ -34,8 +58,7 @@ export class DashboardService {
       res => {
         if (res.status === 200 && res.body.msg === 'success') {
           this.loading = false;
-          this.allQuizzes = res.body.data;
-          this.allQuizzes.reverse();
+          this.quizData = res.body.data;
         }
       },
       err => {

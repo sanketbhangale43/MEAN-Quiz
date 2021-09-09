@@ -40,7 +40,8 @@ const quizSchema = new mongoose.Schema({
                 type: String,
                 required: true
             },
-            correct_options: []
+            correct_options: [],
+            selected_options: []
         }
     ]
 })

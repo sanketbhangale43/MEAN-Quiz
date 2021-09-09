@@ -15,6 +15,13 @@ const routes: Routes = [
     data: { preload: true },
     pathMatch: 'full',
     loadChildren: () => import('./create-quiz/create-quiz.module').then(m => m.CreateQuizModule),
+  },
+
+  {
+    path: 'quiz/play/:quiz_id',
+    data: { preload: true },
+    pathMatch: 'full',
+    loadChildren: () => import('./quiz-screen/quiz-screen.module').then(m => m.QuizScreenModule),
   }
 ];
 

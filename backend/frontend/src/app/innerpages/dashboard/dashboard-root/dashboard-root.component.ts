@@ -23,7 +23,6 @@ export class DashboardRootComponent implements OnInit {
   }
 
   start_quiz(quizId: string) {
-    console.log('////////////');
-    console.log(quizId);
+    this.router.navigate([`/quiz/play/${quizId}`]);
   }
 }

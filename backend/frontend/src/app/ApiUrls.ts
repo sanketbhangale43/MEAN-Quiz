@@ -6,5 +6,7 @@ export const endpoints = {
     SignupApi: `${domain}/api/signup`,
     LoginApi: `${domain}/api/login`,
     CreateQuizApi: `${domain}/api/create-quiz`,
-    AllQuizzes: `${domain}/api/all-quizzes`
-}
+    AllQuizzesApi: `${domain}/api/all-quizzes`,
+    AuthApi: `${domain}/api/all-quizzes`,
+    QuizApi: `${domain}/api/quiz`
+};

@@ -1,0 +1,92 @@
+<div class="container mt-5">
+    <!-- Quiz name -->
+    <div class="shadow p-4 border" *ngIf="!service.loading">
+        <p class="p-0 m-0 text-center h3">{{ service.quizData.name }}</p>
+
+        <!-- Question - set -->
+        <div class="border p-2 mt-2" *ngFor="let obj of service.quizData.questions; let i=index;">
+            <!-- Question -->
+            <p class="col-12 h6 p-0 m-0 mb-1 _f4">Question - {{i+1}} <span>{{ obj.question }}</span></p>
+
+            <!-- Options row - 1 -->
+            <div class="d-flex">
+                <div class="col-6">
+                    <div class="p-2">
+                        <!-- Option A -->
+                        <div class="d-flex align-items-center">
+                            <mat-checkbox [checked]="obj.selected_options.indexOf(1) !== -1"
+                                (change)="set_answer($event, i, 1)">
+                                {{ obj.option_a }}
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="p-2">
+                        <!-- Option B -->
+                        <div class="d-flex align-items-center">
+                            <mat-checkbox [checked]="obj.selected_options.indexOf(2) !== -1"
+                                (change)="set_answer($event, i, 2)">
+                                <span
+                                    [ngClass]="obj.correct_options.indexOf(2) !== -1 && showCorrectAns ?'text-success':''">
+                                    {{ obj.option_b }}</span>
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Options row - 2 -->
+            <div class="d-flex">
+                <div class="col-6">
+                    <div class="p-2">
+                        <!-- Option C -->
+                        <div class="d-flex align-items-center">
+                            <mat-checkbox [checked]="obj.selected_options.indexOf(3) !== -1"
+                                (change)="set_answer($event, i, 3)">{{ obj.option_c }}
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="p-2">
+                        <!-- Option D -->
+                        <div class="d-flex align-items-center">
+                            <mat-checkbox [checked]="obj.selected_options.indexOf(4) !== -1"
+                                (change)="set_answer($event, i, 4)">{{ obj.option_d }}
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-center col-12">
+            <!-- Submit quiz button -->
+            <div class="col-6" *ngIf="!submitted">
+                <button mat-flat-button class="col-12" color="primary" (click)="submit_quiz()">Submit
+                    Quiz</button>
+            </div>
+
+            <!-- Score and start again -->
+            <ng-container *ngIf="submitted">
+                <div class="bg-success p-2 _br2 h6 _f5 text-white text-center col-12 p-0 m-0 mb-2">
+                    <p class="p-0 m-0">Your score</p>
+                    <p class="p-0 m-0 _f6 mt-2">{{ score }}/{{ service.quizData.questions.length }}</p>
+                </div>
+            </ng-container>
+        </div>
+
+        <!-- Start again button -->
+        <div class="d-flex justify-content-center col-12">
+            <button mat-stroked-button color="primary" (click)="start_again()" *ngIf="submitted">Start
+                Again</button>
+        </div>
+    </div>
+
+    <div class="_ht d-flex align-items-center justify-content-center" *ngIf="service.loading">
+        <mat-spinner [strokeWidth]="3" [diameter]="50"></mat-spinner>
+    </div>
+</div>

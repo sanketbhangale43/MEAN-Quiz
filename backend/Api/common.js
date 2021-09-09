@@ -22,19 +22,28 @@ router.post('/api/create-quiz', VerifyToken, async (req, res) => {
         quiz_obj.questions = JSON.parse(questions_arr);
 
         await quiz_obj.save();
-        return res.status(200).json({ msg: "success" });
+        return res.json({ msg: "success" }).sendStatus(200);
     } catch (err) {
         res.send(500);
         console.log(err);
     }
-})
-
+});
 
 
 router.get('/api/all-quizzes', VerifyToken, async (req, res) => {
     try {
         const data = await Quiz.find({});
-        return res.status(200).json({ msg: "success", data });
+        return res.json({ msg: "success", data }).sendStatus(200);
+    } catch (err) {
+        res.send(500);
+        console.log(err);
+    }
+});
+
+
+router.get('/api/auth', VerifyToken, async (req, res) => {
+    try {
+        return res.json({ msg: "success" }).sendStatus(200);
     } catch (err) {
         res.send(500);
         console.log(err);
@@ -42,8 +51,16 @@ router.get('/api/all-quizzes', VerifyToken, async (req, res) => {
 })
 
 
-
-
+router.get('/api/quiz', VerifyToken, async (req, res) => {
+    try {
+        const quiz_id = req.query.quiz_id;
+        const quiz_obj = await Quiz.findOne({ _id: quiz_id });
+        return res.json({ msg: "success", data: quiz_obj }).sendStatus(200);
+    } catch (err) {
+        res.send(500);
+        console.log(err);
+    }
+})
 /* -------------------------------------------------------------------------- */
 /*                                   EXPORTS                                  */
 /* -------------------------------------------------------------------------- */

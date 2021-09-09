@@ -38,6 +38,26 @@ export class CreateQuizService {
   ) { }
 
 
+  auth() {
+    // Request
+    const requestObservable = this.http.get<any>(
+      endpoints.AuthApi,
+      {
+        observe: 'response', headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    // Response
+    requestObservable.subscribe(
+      res => {
+      },
+      err => {
+        this.loading = false;
+      },
+    );
+  }
 
   create() {
     this.loading = true;
