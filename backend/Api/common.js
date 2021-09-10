@@ -8,7 +8,7 @@ const VerifyToken = require('../middleware/VerifyToken');
 /* -------------------------------------------------------------------------- */
 /*                                  API URLS                                  */
 /* -------------------------------------------------------------------------- */
-/* -------------------------------- Register -------------------------------- */
+/* ------------------------------- Create Quiz ------------------------------ */
 router.post('/api/create-quiz', VerifyToken, async (req, res) => {
     try {
         const { quiz_name, questions_arr } = req.body;
@@ -28,7 +28,7 @@ router.post('/api/create-quiz', VerifyToken, async (req, res) => {
     }
 });
 
-
+/* ------------------------------- All quizzes ------------------------------ */
 router.get('/api/all-quizzes', VerifyToken, async (req, res) => {
     try {
         const data = await Quiz.find({});
@@ -38,7 +38,7 @@ router.get('/api/all-quizzes', VerifyToken, async (req, res) => {
     }
 });
 
-
+/* ------------------------------- Simple Auth ------------------------------ */
 router.get('/api/auth', VerifyToken, async (req, res) => {
     try {
         return res.json({ msg: "success" });
@@ -47,7 +47,7 @@ router.get('/api/auth', VerifyToken, async (req, res) => {
     }
 })
 
-
+/* -------------------------------- Quiz data ------------------------------- */
 router.get('/api/quiz', VerifyToken, async (req, res) => {
     try {
         const quiz_id = req.query.quiz_id;

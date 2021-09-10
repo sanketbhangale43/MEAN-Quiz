@@ -48,12 +48,13 @@ router.post('/api/login', async (req, res) => {
             if (isMatch) {
                 return res.status(200).json({ msg: "success", token: token });
             } else {
-                return res.status(422).json({ msg: "failed" });
+                return res.status(200).json({ msg: "invalid credentials" });
             }
         } else {
-            return res.status(422).json({ msg: "failed" });
+            return res.status(200).json({ msg: "invalid credentials" });
         }
     } catch (err) {
+        return res.status(500).json({ msg: "failed" });
     }
 })
 

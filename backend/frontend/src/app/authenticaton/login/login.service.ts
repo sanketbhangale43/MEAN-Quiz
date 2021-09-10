@@ -33,7 +33,6 @@ export class LoginService {
       this.loading = true;
       const formdata = this.lognForm.value;
       const data = {
-        'name': formdata.NameField,
         'email': formdata.EmailField,
         'password': formdata.PasswordField
       }
@@ -51,21 +50,23 @@ export class LoginService {
       // Response
       requestObservable.subscribe(
         res => {
-          if (res.status === 200 && res.body.msg === 'success') {
-            // Get and set the token
-            const token = res.body.token;
-            this.cookieService.set('token', token);
-
-            this.loading = false;
-            this.router.navigate(['/dashboard']);
-          }
-          if (res.status === 422) {
-            if (res.body.msg === 'plz fill all the details') {
-              this.snackBar.open('plz fill all the details', '', { duration: 2000 });
+          this.loading = false;
+          if (res.status === 200) {
+            if (res.body.msg === 'success') {
+              // Get and set the token
+              const token = res.body.token;
+              this.cookieService.set('token', token);
+              this.router.navigate(['/dashboard']);
             }
-            if (res.body.msg === 'failed') {
+
+            if (res.body.msg === 'invalid credentials') {
+              this.lognForm.reset();
               this.snackBar.open('Invalid credentials', '', { duration: 2000 });
             }
+          }
+
+          if (res.status === 500 && res.body.msg === 'failed') {
+            this.snackBar.open('Something goes wrong! Please try again', '', { duration: 2000 });
           }
         },
         err => {
