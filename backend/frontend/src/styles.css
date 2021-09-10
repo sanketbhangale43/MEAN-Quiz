@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
 ::ng-deep ._custom_input_margin_class_0px > .mat-form-field-wrapper{
   margin-bottom: 0px !important;
   margin-top: 0px !important;
@@ -12,10 +16,6 @@
     align-items: center;
   }
   
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-
 ._f4{
   font-size: large;
 }
@@ -31,3 +31,4 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 ._br2{
   border-radius: 10px;
 }
+

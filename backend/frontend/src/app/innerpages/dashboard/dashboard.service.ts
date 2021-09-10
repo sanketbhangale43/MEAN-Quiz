@@ -21,7 +21,7 @@ export class DashboardService {
     private http: HttpClient
   ) { }
 
-  get_all_quizzes() {
+  get_all_quizzes(): void {
     this.loading = true;
     // Request
     const requestObservable = this.http.get<any>(

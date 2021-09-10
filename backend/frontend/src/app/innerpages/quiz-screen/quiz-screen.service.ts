@@ -1,23 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { endpoints } from 'src/app/ApiUrls';
-
-
-export interface QuestionWithSelectedOptions {
-  question: string;
-  option_a: string;
-  option_b: string;
-  option_c: string;
-  option_d: string;
-  correct_options: number[];
-  selected_options: number[];
-}
+import { QuestionSet } from '../create-quiz/create-quiz.service';
 
 export interface QuizDataType {
   _id: string;
   name: string;
   creator_id: string;
-  questions: QuestionWithSelectedOptions[];
+  questions: QuestionSet[];
 }
 
 
@@ -40,7 +30,7 @@ export class QuizScreenService {
     };
   }
 
-  get_quiz_data() {
+  get_quiz_data(): void {
     this.loading = true;
     // Params
     const params = {

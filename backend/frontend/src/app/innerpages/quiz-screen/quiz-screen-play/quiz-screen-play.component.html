@@ -1,91 +1,137 @@
 <div class="container mt-5">
     <!-- Quiz name -->
-    <div class="shadow p-4 border" *ngIf="!service.loading">
-        <p class="p-0 m-0 text-center h3">{{ service.quizData.name }}</p>
+    <div class="shadow-sm border" *ngIf="!service.loading">
+        <p class="p-0 m-0 h3 mt-4 ml-4">{{ service.quizData.name }}</p>
 
         <!-- Question - set -->
-        <div class="border p-2 mt-2" *ngFor="let obj of service.quizData.questions; let i=index;">
+        <div *ngFor="let obj of service.quizData.questions; let i=index;">
             <!-- Question -->
-            <p class="col-12 h6 p-0 m-0 mb-1 _f4">Question - {{i+1}} <span>{{ obj.question }}</span></p>
+            <p class="h6 p-0 m-0 m-4 _f4 text-justify"><span>{{ obj.question }}</span>
+            </p>
 
             <!-- Options row - 1 -->
-            <div class="d-flex">
-                <div class="col-6">
-                    <div class="p-2">
+            <div class="row p-0 m-0 ml-2">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div>
                         <!-- Option A -->
                         <div class="d-flex align-items-center">
-                            <mat-checkbox [checked]="obj.selected_options.indexOf(1) !== -1"
-                                (change)="set_answer($event, i, 1)">
-                                {{ obj.option_a }}
+                            <mat-checkbox *ngIf="obj.multiple_correct_answers"
+                                [checked]="obj.selected_options.indexOf(1) !== -1"
+                                (change)="set_answer($event, i, 1, obj.multiple_correct_answers)">
+                                <span
+                                    [ngClass]="obj.correct_options.indexOf(1) !== -1 && showCorrectAns ?'text-success h6':''">{{
+                                    obj.option_a }}</span>
                             </mat-checkbox>
+
+                            <mat-radio-button *ngIf="!obj.multiple_correct_answers"
+                                [checked]="obj.selected_options.indexOf(1) !== -1"
+                                (change)="set_answer($event, i, 1, obj.multiple_correct_answers)">
+                                <span
+                                    [ngClass]="obj.correct_options.indexOf(1) !== -1 && showCorrectAns ?'text-success h6':''">{{
+                                    obj.option_a }}</span>
+                            </mat-radio-button>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-6">
-                    <div class="p-2">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div>
                         <!-- Option B -->
                         <div class="d-flex align-items-center">
-                            <mat-checkbox [checked]="obj.selected_options.indexOf(2) !== -1"
-                                (change)="set_answer($event, i, 2)">
+                            <mat-checkbox *ngIf="obj.multiple_correct_answers"
+                                [checked]="obj.selected_options.indexOf(2) !== -1"
+                                (change)="set_answer($event, i, 2, obj.multiple_correct_answers)">
                                 <span
-                                    [ngClass]="obj.correct_options.indexOf(2) !== -1 && showCorrectAns ?'text-success':''">
-                                    {{ obj.option_b }}</span>
+                                    [ngClass]="obj.correct_options.indexOf(2) !== -1 && showCorrectAns ?'text-success h6':''">{{
+                                    obj.option_b }}</span>
                             </mat-checkbox>
+
+                            <mat-radio-button *ngIf="!obj.multiple_correct_answers"
+                                [checked]="obj.selected_options.indexOf(2) !== -1"
+                                (change)="set_answer($event, i, 2, obj.multiple_correct_answers)">
+                                <span
+                                    [ngClass]="obj.correct_options.indexOf(2) !== -1 && showCorrectAns ?'text-success h6':''">{{
+                                    obj.option_b }}</span>
+                            </mat-radio-button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Options row - 2 -->
-            <div class="d-flex">
-                <div class="col-6">
-                    <div class="p-2">
+            <div class="row p-0 m-0 ml-2">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div>
                         <!-- Option C -->
                         <div class="d-flex align-items-center">
-                            <mat-checkbox [checked]="obj.selected_options.indexOf(3) !== -1"
-                                (change)="set_answer($event, i, 3)">{{ obj.option_c }}
+                            <mat-checkbox *ngIf="obj.multiple_correct_answers"
+                                [checked]="obj.selected_options.indexOf(3) !== -1"
+                                (change)="set_answer($event, i, 3, obj.multiple_correct_answers)">
+                                <span
+                                    [ngClass]="obj.correct_options.indexOf(3) !== -1 && showCorrectAns ?'text-success h6':''">{{
+                                    obj.option_c }}</span>
                             </mat-checkbox>
+
+                            <mat-radio-button *ngIf="!obj.multiple_correct_answers"
+                                [checked]="obj.selected_options.indexOf(3) !== -1"
+                                (change)="set_answer($event, i, 3, obj.multiple_correct_answers)">
+                                <span
+                                    [ngClass]="obj.correct_options.indexOf(3) !== -1 && showCorrectAns ?'text-success h6':''">{{
+                                    obj.option_c }}</span>
+                            </mat-radio-button>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-6">
-                    <div class="p-2">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div>
                         <!-- Option D -->
                         <div class="d-flex align-items-center">
-                            <mat-checkbox [checked]="obj.selected_options.indexOf(4) !== -1"
-                                (change)="set_answer($event, i, 4)">{{ obj.option_d }}
+                            <mat-checkbox *ngIf="obj.multiple_correct_answers"
+                                [checked]="obj.selected_options.indexOf(4) !== -1"
+                                (change)="set_answer($event, i, 4, obj.multiple_correct_answers)">
+                                <span
+                                    [ngClass]="obj.correct_options.indexOf(4) !== -1 && showCorrectAns ?'text-success h6':''">{{
+                                    obj.option_d }}</span>
                             </mat-checkbox>
+
+                            <mat-radio-button *ngIf="!obj.multiple_correct_answers"
+                                [checked]="obj.selected_options.indexOf(4) !== -1"
+                                (change)="set_answer($event, i, 4, obj.multiple_correct_answers)">
+                                <span
+                                    [ngClass]="obj.correct_options.indexOf(4) !== -1 && showCorrectAns ?'text-success h6':''">{{
+                                    obj.option_d }}</span>
+                            </mat-radio-button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mt-4 d-flex justify-content-center col-12">
+        <div class="m-4">
             <!-- Submit quiz button -->
-            <div class="col-6" *ngIf="!submitted">
-                <button mat-flat-button class="col-12" color="primary" (click)="submit_quiz()">Submit
-                    Quiz</button>
-            </div>
+            <ng-container *ngIf="!submitted">
+                <button mat-flat-button color="primary" class="mb-3" (click)="submit_quiz()">Submit
+                </button>
+            </ng-container>
 
             <!-- Score and start again -->
             <ng-container *ngIf="submitted">
-                <div class="bg-success p-2 _br2 h6 _f5 text-white text-center col-12 p-0 m-0 mb-2">
+                <div class="bg-success h6 _f5 text-white text-center col-12 p-0 m-0 pt-2 pb-2">
                     <p class="p-0 m-0">Your score</p>
                     <p class="p-0 m-0 _f6 mt-2">{{ score }}/{{ service.quizData.questions.length }}</p>
                 </div>
             </ng-container>
-        </div>
 
-        <!-- Start again button -->
-        <div class="d-flex justify-content-center col-12">
-            <button mat-stroked-button color="primary" (click)="start_again()" *ngIf="submitted">Start
-                Again</button>
+            <!-- Start again button -->
+            <div class="d-flex justify-content-center col-12 mb-3 mt-1">
+                <button mat-stroked-button color="primary" (click)="start_again()" *ngIf="submitted">Start
+                    Again</button>
+            </div>
         </div>
     </div>
 
+    <!-- Spinner -->
     <div class="_ht d-flex align-items-center justify-content-center" *ngIf="service.loading">
         <mat-spinner [strokeWidth]="3" [diameter]="50"></mat-spinner>
     </div>

@@ -11,6 +11,8 @@ export interface QuestionSet {
   option_c: string;
   option_d: string;
   correct_options: number[];
+  selected_options: number[];
+  multiple_correct_answers: boolean;
 }
 
 
@@ -20,12 +22,14 @@ export interface QuestionSet {
 export class CreateQuizService {
   questionSet: QuestionSet[] = [
     {
-      question: "",
-      option_a: "",
-      option_b: "",
-      option_c: "",
-      option_d: "",
-      correct_options: []
+      question: '',
+      option_a: '',
+      option_b: '',
+      option_c: '',
+      option_d: '',
+      correct_options: [],
+      selected_options: [],
+      multiple_correct_answers: false
     }
   ];
   quizName = '';
@@ -38,7 +42,7 @@ export class CreateQuizService {
   ) { }
 
 
-  auth() {
+  auth(): void {
     // Request
     const requestObservable = this.http.get<any>(
       endpoints.AuthApi,
@@ -59,7 +63,7 @@ export class CreateQuizService {
     );
   }
 
-  create() {
+  create(): void {
     this.loading = true;
     const data = {
       'quiz_name': this.quizName,

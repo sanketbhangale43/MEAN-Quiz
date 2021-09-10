@@ -1,29 +1,36 @@
 <div class="container mt-5">
     <!-- Quiz name -->
-    <div class="shadow p-4 border">
-        <mat-form-field appearance="outline" class="col-12 p-0 m-0">
+    <div class="shadow-sm border">
+        <p class="p-0 m-0 h3 mt-3 ml-3 mb-3">Create Quiz</p>
+        <mat-form-field appearance="outline" class="col-12 p-0 m-0 pl-3 pr-3">
             <mat-label>Quiz name</mat-label>
-            <input matInput placeholder="Quiz name" [(ngModel)]="service.quizName" required>
+            <input matInput placeholder="Quiz name" [(ngModel)]="service.quizName" required />
         </mat-form-field>
 
         <!-- Question - set -->
-        <div class="border p-2 mt-2" *ngFor="let set of service.questionSet; let i=index;">
+        <div class="pl-3 pr-3 pt-3" [ngClass]="{'border-top border-bottom':i === 0, 'border-bottom': i >= 0 }"
+            *ngFor="let set of service.questionSet; let i=index;">
             <p class="col-12 h6 p-0 m-0 mb-1">Question - {{i+1}}</p>
             <!-- Question -->
-            <mat-form-field appearance="outline" class="col-12">
+            <mat-form-field appearance="outline" class="col-12 p-0 m-0">
                 <mat-label>Question</mat-label>
-                <input matInput placeholder="Question" (keyup)="set_question(i, $event)" required>
+                <textarea matInput placeholder="Question" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5"
+                    (keyup)="set_question(i, $event)" required></textarea>
             </mat-form-field>
 
             <!-- Options row - 1 -->
-            <div class="d-flex">
-                <div class="col-6">
-                    <div class="p-2">
+            <div class="row p-0 m-0">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-0 m-0">
+                    <div>
                         <!-- Option A -->
-                        <div class="d-flex align-items-center">
-                            <mat-checkbox class="example-margin" (change)="set_correct_answer(i, $event, 1)">
+                        <div class="d-flex align-items-center col-12 p-0 m-0">
+                            <mat-checkbox class="mr-2" *ngIf="set.multiple_correct_answers"
+                                (change)="set_correct_answer(i, $event, 1, set.multiple_correct_answers)">
                             </mat-checkbox>
-                            <mat-form-field appearance="outline" class="col-12 _custom_input_margin_class_0px">
+                            <mat-radio-button *ngIf="!set.multiple_correct_answers"
+                                (change)="set_correct_answer(i, $event, 1, set.multiple_correct_answers)">
+                            </mat-radio-button>
+                            <mat-form-field appearance="outline" class="col-11 p-0 m-0 _custom_input_margin_class_0px">
                                 <mat-label>Option A</mat-label>
                                 <input matInput placeholder="Option A" (keyup)='set_option(i, $event, 1)' required>
                             </mat-form-field>
@@ -31,13 +38,17 @@
                     </div>
                 </div>
 
-                <div class="col-6">
-                    <div class="p-2">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-0 m-0">
+                    <div>
                         <!-- Option B -->
-                        <div class="d-flex align-items-center">
-                            <mat-checkbox class="example-margin" (change)="set_correct_answer(i, $event, 2)">
+                        <div class="d-flex align-items-center col-12 p-0 m-0">
+                            <mat-checkbox class="mr-2" *ngIf="set.multiple_correct_answers"
+                                (change)="set_correct_answer(i, $event, 2, set.multiple_correct_answers)">
                             </mat-checkbox>
-                            <mat-form-field appearance="outline" class="col-12 _custom_input_margin_class_0px">
+                            <mat-radio-button *ngIf="!set.multiple_correct_answers"
+                                (change)="set_correct_answer(i, $event, 2, set.multiple_correct_answers)">
+                            </mat-radio-button>
+                            <mat-form-field appearance="outline" class="col-11 p-0 m-0 _custom_input_margin_class_0px">
                                 <mat-label>Option B</mat-label>
                                 <input matInput placeholder="Option B" (keyup)='set_option(i, $event, 2)' required>
                             </mat-form-field>
@@ -47,14 +58,18 @@
             </div>
 
             <!-- Options row - 2 -->
-            <div class="d-flex">
-                <div class="col-6">
-                    <div class="p-2">
+            <div class="row p-0 m-0">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-0 m-0">
+                    <div>
                         <!-- Option C -->
-                        <div class="d-flex align-items-center">
-                            <mat-checkbox class="example-margin" (change)="set_correct_answer(i, $event, 3)">
+                        <div class="d-flex align-items-center col-12 p-0 m-0">
+                            <mat-checkbox class="mr-2" *ngIf="set.multiple_correct_answers"
+                                (change)="set_correct_answer(i, $event, 3, set.multiple_correct_answers)">
                             </mat-checkbox>
-                            <mat-form-field appearance="outline" class="col-12 _custom_input_margin_class_0px">
+                            <mat-radio-button *ngIf="!set.multiple_correct_answers"
+                                (change)="set_correct_answer(i, $event, 3, set.multiple_correct_answers)">
+                            </mat-radio-button>
+                            <mat-form-field appearance="outline" class="col-11 p-0 m-0 _custom_input_margin_class_0px">
                                 <mat-label>Option C</mat-label>
                                 <input matInput placeholder="Option C" (keyup)=' set_option(i, $event, 3)' required>
                             </mat-form-field>
@@ -62,13 +77,17 @@
                     </div>
                 </div>
 
-                <div class="col-6">
-                    <div class="p-2">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-0 m-0">
+                    <div>
                         <!-- Option D -->
-                        <div class="d-flex align-items-center">
-                            <mat-checkbox class="example-margin" (change)="set_correct_answer(i, $event, 4)">
+                        <div class="d-flex align-items-center col-12 p-0 m-0">
+                            <mat-checkbox class="mr-2" *ngIf="set.multiple_correct_answers"
+                                (change)="set_correct_answer(i, $event, 4, set.multiple_correct_answers)">
                             </mat-checkbox>
-                            <mat-form-field appearance="outline" class="col-12 _custom_input_margin_class_0px">
+                            <mat-radio-button *ngIf="!set.multiple_correct_answers"
+                                (change)="set_correct_answer(i, $event, 4, set.multiple_correct_answers)">
+                            </mat-radio-button>
+                            <mat-form-field appearance="outline" class="col-11 p-0 m-0 _custom_input_margin_class_0px">
                                 <mat-label>Option D</mat-label>
                                 <input matInput placeholder="Option D" (keyup)='set_option(i, $event, 4)' required>
                             </mat-form-field>
@@ -77,24 +96,35 @@
                 </div>
             </div>
 
-            <div class="d-flex">
-                <button mat-stroked-button color="primary" class="ml-auto mt-2" (click)="add_question_set()"
-                    *ngIf="i+1 === noOfQuestionsentered" [disabled]="maxQuestions === noOfQuestionsentered">Add
-                    more</button>
-                <button mat-stroked-button color="warn" class="ml-2 mt-2"
-                    [ngClass]="{'ml-auto' : i+1 !== noOfQuestionsentered}" (click)="remove_question_set(i)"
-                    [disabled]="noOfQuestionsentered === 1">Remove
-                    this</button>
+
+            <!-- Add and remove buttons -->
+            <div class="d-flex flex-column p-0 m-0 mb-3">
+                <!-- Toggle -->
+                <mat-slide-toggle class="mt-2" [checked]="set.multiple_correct_answers"
+                    (toggleChange)="change_question_type(i)"><span class="text-muted">Multiple correct
+                        answers</span>
+                </mat-slide-toggle>
+
+                <div class="d-flex">
+                    <!-- Add button -->
+                    <button mat-stroked-button color="primary" class="mt-2" (click)="add_question_set()"
+                        *ngIf="i+1 === noOfQuestionsentered" [disabled]="maxQuestions === noOfQuestionsentered">Add
+                    </button>
+
+                    <!-- Remove button -->
+                    <button mat-stroked-button color="warn" class="mt-2" (click)="remove_question_set(i)"
+                        [ngClass]="{'ml-3' : i+1 === noOfQuestionsentered}"
+                        [disabled]="noOfQuestionsentered === 1">Remove
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div class="mt-4 ml-2 d-flex justify-content-center col-12">
-            <div class="col-6">
-                <mat-progress-bar mode="indeterminate" *ngIf="service.loading"></mat-progress-bar>
-                <button mat-flat-button class="col-12" color="primary" [disabled]="service.loading"
-                    (click)="save_quiz()">Save
-                    quiz</button>
-            </div>
+        <!-- Save button -->
+        <div class="pl-3 pr-3 mb-3 mt-3">
+            <mat-progress-bar mode="indeterminate" class="_ht_92_px" *ngIf="service.loading"></mat-progress-bar>
+            <button mat-flat-button color="primary" [disabled]="service.loading" (click)="save_quiz()">Save
+                quiz</button>
         </div>
     </div>
 </div>
